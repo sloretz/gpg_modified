@@ -28,10 +28,15 @@ void Plot::plotFingers(const std::vector<Grasp>& hand_list, const PointCloudRGBA
 
   boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer = createViewer(str);
 
-  pcl::visualization::PointCloudColorHandlerRGBAField<pcl::PointXYZRGBA> rgb(cloud);
-  viewer->addPointCloud<pcl::PointXYZRGBA>(cloud, rgb, "cloud");
-  viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud");
+  // pcl::visualization::PointCloudColorHandlerRGBAField<pcl::PointXYZRGBA> rgb(cloud);
+  // viewer->addPointCloud(cloud, rgb, "cloud");
 
+  // Jiaji: Changed to rgb field otherwise clouds from elastic fusion won't visualize.
+  pcl::visualization::PointCloudColorHandlerRGBField<pcl::PointXYZRGBA> rgb(cloud);
+  viewer->addPointCloud(cloud, rgb, "cloud");
+
+  //viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 1, "cloud");
+  std::cout << "Plotting" << std::endl;
   PointCloudRGBA::Ptr cloud_fingers(new PointCloudRGBA);
   cloud_fingers = createFingersCloud(hand_list, outer_diameter);
 
@@ -387,8 +392,8 @@ boost::shared_ptr<pcl::visualization::PCLVisualizer> Plot::createViewer(std::str
 {
   boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer(new pcl::visualization::PCLVisualizer(title));  
   viewer->setPosition(0, 0);
-  viewer->setSize(640, 480);
-  viewer->setBackgroundColor(1.0, 1.0, 1.0);
+  //viewer->setSize(640, 480);
+  //viewer->setBackgroundColor(1.0, 1.0, 1.0);
 
   pcl::visualization::Camera camera;
   camera.clip[0] = 0.00130783;

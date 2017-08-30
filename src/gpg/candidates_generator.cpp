@@ -134,7 +134,16 @@ std::vector<Grasp> CandidatesGenerator::generateGraspCandidates(const CloudCamer
     {
       if (hand_set_list[i].getIsValid()(j))
       {
-        candidates.push_back(hands[j]);
+        Eigen::Vector3d approach_vec = hands[j].getApproach();
+        Eigen::Vector3d grasp_frame_point = hands[j].getGraspBottom();
+
+        if ((approach_vec(2)) < -0.95 && hands[j].isFullAntipodal() 
+            && grasp_frame_point[2] > -0.02) {
+          //continue;
+          std::cout << "approach vec" << " : " << approach_vec.transpose() << std::endl;
+          candidates.push_back(hands[j]);
+        } 
+        
       }
     }
   }

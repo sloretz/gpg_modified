@@ -244,8 +244,12 @@ void GraspSet::labelHypothesis(const PointList& point_list, const FingerHand& fi
 const
 {
   Antipodal antipodal;
-  int label = antipodal.evaluateGrasp(point_list, 0.003, finger_hand.getLateralAxis(), finger_hand.getForwardAxis(),
-    rotation_axis_);
+  // int label = antipodal.evaluateGrasp(point_list, 0.003, finger_hand.getLateralAxis(), finger_hand.getForwardAxis(),
+  //    rotation_axis_);
+  //double mu = 0.5;
+  int label = antipodal.evaluateGrasp(point_list, 0.01, finger_hand.getLateralAxis(), finger_hand.getForwardAxis(),
+      rotation_axis_);
+
   hand.setHalfAntipodal(label == Antipodal::HALF_GRASP || label == Antipodal::FULL_GRASP);
   hand.setFullAntipodal(label == Antipodal::FULL_GRASP);
 }

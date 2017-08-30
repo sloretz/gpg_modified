@@ -28,16 +28,20 @@ std::vector<double> stringToDouble(const std::string& str)
   return values;
 }
 
+void proc(std::vector<Grasp> candidates) {
+  for (int i = 0; i < candidates.size(); ++i) {
+    std::cout << candidates[i].getApproach().transpose() << std::endl;  
+  }
+}
 
 int main(int argc, char* argv[])
 {
   // Read arguments from command line.
   if (argc < 3)
   {
-    std::cout << "Error: Not enough input arguments!\n\n";
-    std::cout << "Usage: generate_candidates [CONFIG_FILE] [PCD_FILE] [NORMALS_FILE]\n\n";
-    std::cout << "Generate grasp candidates for a point cloud, PCD_FILE (*.pcd), using parameters from CONFIG_FILE (*.cfg).\n\n";
-    std::cout << "[NORMALS_FILE] (optional) contains a surface normal for each point in the cloud (*.csv).\n";
+    std::cout << "Not enough input arguments!\n";
+    std::cout << "Usage: generate_candidates [CONFIG_FILE] [PCD_FILE] [NORMALS_FILE]\n";
+    std::cout << "Generate grasp candidates for point cloud PCD_FILE using parameters from CONFIG_FILE.\n";
     return (-1);
   }
 
@@ -130,6 +134,11 @@ int main(int argc, char* argv[])
 
   // Generate a list of grasp candidates.
   std::vector<Grasp> candidates = candidates_generator.generateGraspCandidates(cloud_cam);
+  proc(candidates);
+  for (int i=0; i < candidates.size(); i++)
+  {
+    std::cout << i << ": " << candidates[i].isFullAntipodal() << "\n";
+  }
 
   return 0;
 }

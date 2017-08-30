@@ -1,5 +1,5 @@
 #include <gpg/cloud_camera.h>
-
+#include <pcl/visualization/pcl_visualizer.h>
 
 CloudCamera::CloudCamera()
 : cloud_original_(new PointCloudRGB), cloud_processed_(new PointCloudRGB)
@@ -513,11 +513,17 @@ void CloudCamera::setNormalsFromFile(const std::string& filename)
 PointCloudRGB::Ptr CloudCamera::loadPointCloudFromFile(const std::string& filename) const
 {
   PointCloudRGB::Ptr cloud(new PointCloudRGB);
+ 
+  // pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud2(new pcl::PointCloud<pcl::PointXYZRGB>);
+  // pcl::PCDReader reader;
+  // reader.read<pcl::PointXYZRGB>(filename, *cloud2);
+  // pcl::copyPointCloud(*cloud2, *cloud);
   if (pcl::io::loadPCDFile<pcl::PointXYZRGBA>(filename, *cloud) == -1)
   {
     std::cout << "Couldn't read .pcd file: " << filename << "\n";
     cloud->points.resize(0);
   }
+
   return cloud;
 }
 
