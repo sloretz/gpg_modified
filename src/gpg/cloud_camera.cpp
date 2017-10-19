@@ -25,6 +25,57 @@ CloudCamera::CloudCamera(const PointCloudRGB::Ptr& cloud, const Eigen::MatrixXi&
 }
 
 
+CloudCamera::CloudCamera(const PointCloudJustRGB::ConstPtr& cloud, const Eigen::MatrixXi& camera_source,
+  const Eigen::Matrix3Xd& view_points) : cloud_processed_(new PointCloudRGB), cloud_original_(new PointCloudRGB),
+    camera_source_(camera_source), view_points_(view_points)
+{
+  sample_indices_.resize(0);
+  samples_.resize(3,0);
+  normals_.resize(3,0);
+
+  pcl::copyPointCloud(*cloud, *cloud_original_);
+  *cloud_processed_ = *cloud_original_;
+}
+
+
+CloudCamera::CloudCamera(
+    const pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr& cloud,
+    const pcl::PointCloud<pcl::Normal>::ConstPtr& normal,
+    const Eigen::MatrixXi& camera_source, const Eigen::Matrix3Xd& view_points)
+    : cloud_processed_(new PointCloudRGB), cloud_original_(new PointCloudRGB),
+      camera_source_(camera_source), view_points_(view_points) {
+  sample_indices_.resize(0);
+  samples_.resize(3,0);
+
+  pcl::copyPointCloud(*cloud, *cloud_original_);
+  *cloud_processed_ = *cloud_original_;
+
+  normals_.resize(3, cloud->size());
+  for (int i = 0; i < cloud->size(); i++)
+  {
+    normals_.col(i) << normal->points[i].normal_x, normal->points[i].normal_y, normal->points[i].normal_z;
+  }
+}
+
+
+CloudCamera::CloudCamera(const pcl::PointCloud<pcl::PointXYZRGBNormal>::ConstPtr& cloud,
+    const Eigen::MatrixXi& camera_source, const Eigen::Matrix3Xd& view_points)
+    : cloud_processed_(new PointCloudRGB), cloud_original_(new PointCloudRGB),
+      camera_source_(camera_source), view_points_(view_points) {
+  sample_indices_.resize(0);
+  samples_.resize(3,0);
+
+  pcl::copyPointCloud(*cloud, *cloud_original_);
+  *cloud_processed_ = *cloud_original_;
+
+  normals_.resize(3, cloud->size());
+  for (int i = 0; i < cloud->size(); i++)
+  {
+    normals_.col(i) << cloud->points[i].normal_x, cloud->points[i].normal_y, cloud->points[i].normal_z;
+  }
+}
+
+
 CloudCamera::CloudCamera(const PointCloudPointNormal::Ptr& cloud, const Eigen::MatrixXi& camera_source,
   const Eigen::Matrix3Xd& view_points) : cloud_processed_(new PointCloudRGB), cloud_original_(new PointCloudRGB),
     camera_source_(camera_source), view_points_(view_points)
@@ -323,7 +374,7 @@ void CloudCamera::subsampleSamples(int num_samples)
   // subsample the incoming samples
   else
   {
-    std::cout << "Using " << num_samples << " out of " << samples_.cols() << " available samples.\n"; 
+    std::cout << "Using " << num_samples << " out of " << samples_.cols() << " available samples.\n";
     std::vector<int> seq(samples_.cols());
     for (int i = 0; i < seq.size(); i++)
     {
@@ -513,7 +564,7 @@ void CloudCamera::setNormalsFromFile(const std::string& filename)
 PointCloudRGB::Ptr CloudCamera::loadPointCloudFromFile(const std::string& filename) const
 {
   PointCloudRGB::Ptr cloud(new PointCloudRGB);
- 
+
   // pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud2(new pcl::PointCloud<pcl::PointXYZRGB>);
   // pcl::PCDReader reader;
   // reader.read<pcl::PointXYZRGB>(filename, *cloud2);

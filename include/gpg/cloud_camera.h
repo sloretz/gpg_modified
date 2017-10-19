@@ -54,6 +54,7 @@
 
 
 typedef pcl::PointCloud<pcl::PointXYZRGBA> PointCloudRGB;
+typedef pcl::PointCloud<pcl::PointXYZRGB> PointCloudJustRGB;
 typedef pcl::PointCloud<pcl::PointNormal> PointCloudPointNormal;
 typedef pcl::PointCloud<pcl::Normal> PointCloudNormal;
 
@@ -61,10 +62,10 @@ typedef pcl::PointCloud<pcl::Normal> PointCloudNormal;
 /** CloudCamera class
  *
  * \brief A point cloud with camera sources and surface normals
- * 
+ *
  * This class stores a point cloud with camera sources and surface normals for each point in the point cloud and the
  * view point of the camera from which the cloud was observed.
- * 
+ *
 */
 class CloudCamera
 {
@@ -133,6 +134,17 @@ public:
    */
   CloudCamera(const PointCloudRGB::Ptr& cloud, const Eigen::MatrixXi& camera_source,
     const Eigen::Matrix3Xd& view_points);
+
+  CloudCamera(const PointCloudJustRGB::ConstPtr& cloud, const Eigen::MatrixXi& camera_source,
+    const Eigen::Matrix3Xd& view_points);
+
+  CloudCamera(const PointCloudJustRGB::ConstPtr& cloud,
+    const pcl::PointCloud<pcl::Normal>::ConstPtr& normal,
+    const Eigen::MatrixXi& camera_source,
+    const Eigen::Matrix3Xd& view_points);
+
+  CloudCamera(const pcl::PointCloud<pcl::PointXYZRGBNormal>::ConstPtr& cloud,
+      const Eigen::MatrixXi& camera_source, const Eigen::Matrix3Xd& view_points);
 
   /**
    * \brief Constructor.
