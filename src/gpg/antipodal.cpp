@@ -8,8 +8,9 @@ const int Antipodal::FULL_GRASP = 2; // normals point towards both fingers
 int Antipodal::evaluateGrasp(const PointList& point_list, double extremal_thresh, int lateral_axis, int forward_axis,
   int vertical_axis) const
 {
-  
-  double friction_coeff = 50.0; // angle of friction cone in degrees
+  // Todo(Jjz): The bigger this number, the less strict the anti-podal criteria
+  // is. {Previous value is set as 50.0}
+  double friction_coeff = 75.0; // angle of friction cone in degrees
   int viable_thresh = 4; // number of viable points required on each side to be antipodal
 
   // double friction_coeff = 5.0; // angle of friction cone in degrees
