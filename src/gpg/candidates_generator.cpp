@@ -136,8 +136,9 @@ std::vector<Grasp> CandidatesGenerator::generateGraspCandidates(const CloudCamer
       {
         const Eigen::Vector3d& approach_vec = hands[j].getApproach();
         const Eigen::Vector3d& grasp_finger_point = hands[j].getGraspTop();
-
-        if ((approach_vec(2)) < -0.9 && hands[j].isFullAntipodal()) {
+        // Todo(Jjz): The larger this value is, the more vertical grasp (less roll,pitch) is.
+        const double z_vertical_aligned = 0.95;
+        if ((approach_vec(2)) < -z_vertical_aligned && hands[j].isFullAntipodal()) {
           //continue;
           candidates.push_back(hands[j]);
         }
