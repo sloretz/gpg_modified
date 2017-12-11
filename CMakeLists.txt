@@ -99,7 +99,7 @@ set_target_properties(${PROJECT_NAME}_grasp_candidates_generator
 # Set the location for library installation (/usr/lib in this case is not really necessary)
 # Use "sudo make install" to apply
 install(TARGETS ${PROJECT_NAME}_grasp_candidates_generator ${PROJECT_NAME}_config_file
-  DESTINATION ${CMAKE_INSTALL_PREFIX})
+  DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 
 install(DIRECTORY include/gpg
   DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
