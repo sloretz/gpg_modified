@@ -1,5 +1,5 @@
 #include <gpg/frame_estimator.h>
-
+#include <omp.h>
 
 std::vector<LocalFrame> FrameEstimator::calculateLocalFrames(const CloudCamera& cloud_cam,
   const std::vector<int>& indices, double radius, const pcl::KdTreeFLANN<pcl::PointXYZRGBA>& kdtree) const

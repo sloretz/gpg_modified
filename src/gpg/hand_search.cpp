@@ -1,5 +1,5 @@
 #include <gpg/hand_search.h>
-
+#include <omp.h>
 
 const int HandSearch::ROTATION_AXIS_NORMAL = 0;
 const int HandSearch::ROTATION_AXIS_BINORMAL = 1;

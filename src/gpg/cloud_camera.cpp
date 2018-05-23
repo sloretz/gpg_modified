@@ -1,4 +1,5 @@
 #include <gpg/cloud_camera.h>
+#include <omp.h>
 #include <pcl/visualization/pcl_visualizer.h>
 
 CloudCamera::CloudCamera()
