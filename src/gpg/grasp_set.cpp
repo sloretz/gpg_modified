@@ -1,5 +1,5 @@
 #include <gpg/grasp_set.h>
-
+#include <omp.h>
 
 const int GraspSet::ROTATION_AXIS_NORMAL = 0;
 const int GraspSet::ROTATION_AXIS_BINORMAL = 1;
