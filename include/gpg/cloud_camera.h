@@ -82,7 +82,7 @@ public:
      * \param b the second 3D-vector
      * \return true if they differ in at least one element, false if all elements are equal
     */
-    bool operator ()(const Eigen::Vector3i& a, const Eigen::Vector3i& b)
+    bool operator ()(const Eigen::Vector3i& a, const Eigen::Vector3i& b) const
     {
       for (int i = 0; i < a.size(); i++)
       {
@@ -107,7 +107,7 @@ public:
      * \param b the second 4D-vector
      * \return true if they differ in at least one of the first three elements, false otherwise
     */
-    bool operator ()(const Eigen::Vector4i& a, const Eigen::Vector4i& b)
+    bool operator ()(const Eigen::Vector4i& a, const Eigen::Vector4i& b) const
     {
       for (int i = 0; i < a.size() - 1; i++)
       {
