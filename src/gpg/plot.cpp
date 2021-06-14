@@ -1,5 +1,9 @@
 #include <gpg/plot.h>
 
+#include <boost/lexical_cast.hpp>
+#include <boost/shared_ptr.hpp>
+#include <boost/thread.hpp>
+
 
 void Plot::plotFingers(const std::vector<GraspSet>& hand_set_list, const PointCloudRGBA::Ptr& cloud,
   std::string str, double outer_diameter) const
