@@ -116,7 +116,7 @@ class GraspSet
        * \param b the second 3D-vector
        * \return true if they differ in at least one element, false if all elements are equal
        */
-      bool operator ()(const Eigen::Vector3i& a, const Eigen::Vector3i& b)
+      bool operator ()(const Eigen::Vector3i& a, const Eigen::Vector3i& b) const
       {
         for (int i = 0; i < a.size(); i++)
         {
