@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.5)
 project(gpg)
 set(CMAKE_BUILD_TYPE Release)
 
@@ -10,6 +10,9 @@ find_package(PCL REQUIRED)
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
+
+# Boost
+find_package(Boost REQUIRED COMPONENTS thread)
 
 ## Set compiler optimization flags
 set(CMAKE_CXX_FLAGS "-O3 -fopenmp -fPIC -Wno-deprecated -Wenum-compare")
@@ -30,10 +33,14 @@ add_library(${PROJECT_NAME}_eigen_utils src/${PROJECT_NAME}/eigen_utils.cpp)
 add_library(${PROJECT_NAME}_finger_hand src/${PROJECT_NAME}/finger_hand.cpp)
 add_library(${PROJECT_NAME}_frame_estimator src/${PROJECT_NAME}/frame_estimator.cpp)
 add_library(${PROJECT_NAME}_grasp src/${PROJECT_NAME}/grasp.cpp)
+target_link_libraries(${PROJECT_NAME}_grasp Boost::headers)
 add_library(${PROJECT_NAME}_grasp_set src/${PROJECT_NAME}/grasp_set.cpp)
+target_link_libraries(${PROJECT_NAME}_grasp_set Boost::headers)
 add_library(${PROJECT_NAME}_hand_search src/${PROJECT_NAME}/hand_search.cpp)
 add_library(${PROJECT_NAME}_local_frame src/${PROJECT_NAME}/local_frame.cpp)
+target_link_libraries(${PROJECT_NAME}_local_frame Boost::headers)
 add_library(${PROJECT_NAME}_plot src/${PROJECT_NAME}/plot.cpp)
+target_link_libraries(${PROJECT_NAME}_plot Boost::thread Boost::headers)
 add_library(${PROJECT_NAME}_point_list src/${PROJECT_NAME}/point_list.cpp)
 
 # This executable is for testing the shared library
